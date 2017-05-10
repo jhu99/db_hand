@@ -1,13 +1,15 @@
 source("extractor.R")
-query <- "3cjh"
-query <- "P32897"
-query <- "homo sapiens[ORGN]"
 datafolder="/Users/jialu/Research/datasets/"
-network<-read.csv("/Users/jialu/Research/datasets/networks.tab",header = TRUE,sep = "\t")
-
-
+network<-read.csv("/Users/jialu/Research/datasets/networks.tab",
+                  header = TRUE,sep = "\t",stringsAsFactors = FALSE)
+nodes <- c(network$interactorA,network$interactorB)
+selected <- duplicated(nodes)
+nodes <- nodes[!selected]
 resultfolder <- "/Users/jialu/Research/datasets/ncbi_db_protein/"
-es  <- entrez_search(db="protein",term = query)
-geneID <- es$ids
-es <- efetch(db = "protein",ids = geneID, folder = resultfolder)
+for(query in nodes){
+  es  <- entrez_search(db="protein",term = query)
+  geneID <- es$ids
+  es <- efetch(db = "protein",ids = geneID, folder = resultfolder) 
+}
+
 
