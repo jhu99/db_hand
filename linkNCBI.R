@@ -1,19 +1,19 @@
 source("extractor.R")
-# network<-read.csv("/Users/jialu/Research/datasets/networks_str.tab",
+# network<-read.csv("/Users/jialu/Research/datasets/biogrid_net.tab",
 #                    header = TRUE,sep = "\t",stringsAsFactors = FALSE)
 # nodes <- c(network$interactorA,network$interactorB)
 # selected <- duplicated(nodes)
 # nodes <- nodes[!selected]
-# save(nodes,file = "/Users/jialu/Research/datasets/nodes_list_str.RData")
+# save(nodes,file = "/Users/jialu/Research/datasets/nodes_list_biogrid.RData")
 load("/Users/jialu/Research/datasets/nodes_list_str.RData")
 resultfolder <- "/Users/jialu/Research/datasets/ncbi_db_protein/"
-nodes_acc_gi_file <- "/Users/jialu/Research/datasets/ncbi_db_protein/00002.tab"
+nodes_acc_gi_file <- "/Users/jialu/Research/datasets/ncbi_db_protein/00004_biogrid.tab"
 gi_map=c()
 gi_list=c()
-for(i in 1:71891){
+for(i in 1:54155){
   query=nodes[i]
-  i=i+1
   print(i)
+  i=i+1
   es  <- entrez_search(db="protein",term = query)
   geneID <- es$ids
   for(gi in geneID){
