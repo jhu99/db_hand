@@ -10,7 +10,7 @@ mask<-function(mt,rt){
 }
 #######Pre-selection of candidate cells for a single cell###########################
 library(glmnet)
-ref_imputation <- function()
+ref_imputation <- function(pb,rp)
 {
   pre_candidate_num <- 200
   len_mdc <- dim(mdc_mask$mt)[2]
@@ -40,12 +40,13 @@ ref_imputation <- function()
     yp <- predict(fit,newx = newx,s="lambda.min")
     yp_predict_samples <- c(yp_predict_samples,yp)
   }
-  ct<-cor.test(yp,mdc_mask$yr)
-  save(ct,file = "sc_ct.RD")
+  fn <- paste("result",pb,rp,".RD",sep = "-")
+  save(mdc_mask,yp_predict_samples,file = fn)
+  ct<-cor.test(yp_predict_samples,mdc_mask$yr)
   return(ct)
 }
 #####Generate 10 test datasets for each pb in c(0.01,0.05,0.1)
-load("sc_test_data.RD")
+load("../sc_test_data.RD")
 for(pb in c(0.01,0.05,0.1)){
   corest<-c()
   corpv<-c()
@@ -59,10 +60,10 @@ for(pb in c(0.01,0.05,0.1)){
     mdc_5K_100cells <- mdc[ind_gene_5k,rand_sc_mdc]
     mdc_mask<-mask(mdc_5K_100cells,pb)
     save(ind_gene_5k,rand_sc_mdc,mdc_mask,file = "sc_xxx.RD")
-    ct <- ref_imputation()
+    ct <- ref_imputation(pb,rp)
     corest<-c(corest,ct$estimate)
     corpv<-c(corpv,ct$p.value)
   }
-  fname<-paste("result",pb,rp,".RD",sep = "-")
+  fname<-paste("result",pb,".RD",sep = "-")
   save(corest,corpv,file = fname)
 }
