@@ -14,10 +14,10 @@ load("./sc_test_data.RD")
 remove(md)
 for(pb in c(0.01,0.05,0.1)){
   for(rp in 1:10){
-    for(cn in c(200,300)){
+      cn<-500
       print(c(rp,cn))
       ind_gene_5k <- sample(ind_gene_name_common,5000,replace = FALSE)
-      rand_sc_mdc <- sample(1:18677, 500, replace = FALSE)
+      rand_sc_mdc <- sample(1:18677, cn, replace = FALSE)
       rand_sc_mdc <- sort(rand_sc_mdc)
       mdc_5k_100cells <- mdc[ind_gene_5k,rand_sc_mdc]
       mdc_mask<-mask(mdc_5k_100cells,pb)
@@ -29,6 +29,5 @@ for(pb in c(0.01,0.05,0.1)){
                    minbool = FALSE, alpha = 0.5, report = TRUE, outdir = fn)
       fn <- paste("./result/viper",pb,rp,cn,".RD",sep = "-")
       save(rand_sc_mdc,ind_gene_5k,mdc_mask,res,file = fn)
-    }
   }
 }
