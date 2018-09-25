@@ -12,22 +12,22 @@ mask<-function(mt,rt){
 library(VIPER)
 load("./sc_test_data.RD")
 remove(md)
+celltype <-c(0,3731,6369,9564,12274,15765,18677)
 for(pb in c(0.01,0.05,0.1)){
-  for(rp in 1:10){
-      cn<-500
-      print(c(rp,cn))
+  for(rp in 1:6){
+      print(c(pb,rp))
       ind_gene_5k <- sample(ind_gene_name_common,5000,replace = FALSE)
-      rand_sc_mdc <- sample(1:18677, cn, replace = FALSE)
-      rand_sc_mdc <- sort(rand_sc_mdc)
-      mdc_5k_100cells <- mdc[ind_gene_5k,rand_sc_mdc]
-      mdc_mask<-mask(mdc_5k_100cells,pb)
-      save(rand_sc_mdc,mdc_mask,mdc,file = "sc_viper_xxx.RD")
+      one_cell_type <- (celltype[rp]+1):celltype[rp+1]
+      mdc_5k_selected_cells <- mdc[ind_gene_5k,one_cell_type]
+      mdc_mask<-mask(mdc_5k_selected_cells,pb)
       gene.expression <- as.data.frame(mdc_mask$mt)
-      fn <- paste("./result/viper",pb,rp,cn,sep = "-")
+      fn <- paste("./result/viper",pb,rp,sep = "-")
       dir.create(fn)
+      fn2 <- paste("./result/viper",pb,rp,"data.RD",sep = "-")
+      save(ind_gene_5k,mdc_mask,file = fn2)
       res <- VIPER(gene.expression, num = 5000, percentage.cutoff = 0.1,
                    minbool = FALSE, alpha = 0.5, report = TRUE, outdir = fn)
-      fn <- paste("./result/viper",pb,rp,cn,".RD",sep = "-")
-      save(rand_sc_mdc,ind_gene_5k,mdc_mask,res,file = fn)
+      fn <- paste("./result/viper",pb,rp,"res.RD",sep = "-")
+      save(res,file = fn)
   }
 }
