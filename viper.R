@@ -13,7 +13,7 @@ library(VIPER)
 load("./sc_test_data.RD")
 remove(md)
 celltype <-c(0,3731,6369,9564,12274,15765,18677)
-for(pb in c(0.01,0.05,0.1)){
+for(pb in c(0.1)){
   for(rp in 1:6){
       print(c(pb,rp))
       ind_gene_5k <- sample(ind_gene_name_common,5000,replace = FALSE)

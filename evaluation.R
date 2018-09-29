@@ -48,6 +48,13 @@ for(pb in c(0.01,0.05,0.1)){
   boxplot(cbind(meanL1,medianL1),xlab ="Percentage of masking data",ylab="mean L1 loss")
   boxplot(medianL1,xlab ="Percentage of masking data",ylab="median L1 loss")
   boxplot(mse,xlab ="Percentage of masking data",ylab="mean square error")
-  
+}
+
+#########evaluate scimpute###########
+for(pb in c(0.01,0.05,0.1)){
+  for(rp in 1:6){
+    print(pb,rp)
+    
+  }
 }
 
