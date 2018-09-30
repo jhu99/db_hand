@@ -65,7 +65,7 @@ class Cells{
 };
 
 void Cells::readFile(){
-	ifstream inFile("scimpute-0.01-1-data", ios::in);
+	ifstream inFile("scimpute-0.01-1-data.csv", ios::in);
 	string lineStr;
 	string geneName;
 	string str;
