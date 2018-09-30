@@ -50,11 +50,18 @@ for(pb in c(0.01,0.05,0.1)){
   boxplot(mse,xlab ="Percentage of masking data",ylab="mean square error")
 }
 
-#########evaluate scimpute###########
+#########Evaluation on scimpute###########
 for(pb in c(0.01,0.05,0.1)){
   for(rp in 1:6){
     print(pb,rp)
-    
+    fn1 <- paste("./result/scimpute",pb,rp,"/data.RD",sep = "-")
+    load(fn1)
+    fn2 <- paste("./result/scimpute",pb,rp,"/scimpute_count.csv",sep = "-")
+    impute.df<-read.csv(fn2,stringsAsFactors = FALSE)
+    cns <- impute.df$X
+    impute.df<-impute.df[-1]
+    impute.mt <- as.matrix(impute.df)
+    impute.mt[mdc_mask$mask_ind]-mdc_m
   }
 }
 
