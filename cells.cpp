@@ -128,11 +128,8 @@ void Cells::findCell(string name){
 int main(){
 	string cellName;
 	Cells cells;
-	cout<<"------------------------"<<endl;
 	cells.readFile();
-	cout<<"-----------------"<<endl;
 	cells.sortCell();
-	cout<<"--------"<<endl;
 	while(1){
 		cout<<"请输入细胞名称,退出输入0"<<endl;
 		cin>>cellName;
