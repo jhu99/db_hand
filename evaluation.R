@@ -93,5 +93,21 @@ boxplot(peason_corr_all,names=c("1%","5%","10%"),xlab ="Percentage of masking da
 boxplot(meanL1_all,names=c("1%","5%","10%"),xlab ="Percentage of masking data",ylab="mean L1 loss")
 boxplot(medianL1_all,names=c("1%","5%","10%"),xlab ="Percentage of masking data",ylab="median L1 loss")
 boxplot(mse_all,names=c("1%","5%","10%"),xlab ="Percentage of masking data",ylab="mean square error")
-
+#########Evaluation on saver###########
+medianL1_all<-c()
+meanL1_all<-c()
+mse_all <-c()
+peason_corr_all <- c()
+for(pb in c(0.01,0.05,0.1)){
+  meanL1<-c()
+  medianL1<-c()
+  mse<-c()
+  corest<-c()
+  for(rp in 1:6){
+    print(c(pb,rp))
+    fn <- paste("../result/saver",pb,rp,"/data.RD",sep = "-")
+    load(fn)
+    x<- mdc.saver$estimate[mdc_mask$mask_ind]-mdc_mask$yr
+  }
+}
 
